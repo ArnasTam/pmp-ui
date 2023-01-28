@@ -20,14 +20,22 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
-  plugins: [
-    'import',
-  ],
+  plugins: ['import'],
   rules: {
-    'import/order': ['error', {
-      'newlines-between': 'always',
-      groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
-    }],
+    'import/order': [
+      'error',
+      {
+        'newlines-between': 'always',
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+        ],
+      },
+    ],
     'import/no-relative-parent-imports': 'error',
     'react/function-component-definition': [
       2,
@@ -36,5 +44,9 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    '@typescript-eslint/no-floating-promises': [0],
+    '@typescript-eslint/no-misused-promises': [0],
+    'object-curly-newline': [0],
+    'react/jsx-no-useless-fragment': [0],
   },
 };
