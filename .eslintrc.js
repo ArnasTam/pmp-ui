@@ -48,5 +48,9 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': [0],
     'object-curly-newline': [0],
     'react/jsx-no-useless-fragment': [0],
+    'import/no-extraneous-dependencies': [0],
+    'react/require-default-props': [0],
+    'react/jsx-wrap-multilines': [0],
+    'implicit-arrow-linebreak': [0],
   },
 };

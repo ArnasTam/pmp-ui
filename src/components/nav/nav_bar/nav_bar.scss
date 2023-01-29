@@ -1,0 +1,8 @@
+.nav-bar {
+  padding: 5px;
+  border-bottom: 1px rgb(204, 204, 204) solid;
+  box-shadow: 6px 6px 20px -5px rgba(0, 0, 0, 0.1);
+  > * {
+    padding: 10px 15px;
+  }
+}
