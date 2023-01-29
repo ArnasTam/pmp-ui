@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import PageLayout from 'src/components/page_layout/page_layout';
 
-const HomePage: FC = () => <PageLayout>placeholder</PageLayout>;
-export default HomePage;
+const NotFound: FC = () => <PageLayout>NOT FOUND</PageLayout>;
+
+export default NotFound;

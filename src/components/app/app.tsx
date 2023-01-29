@@ -1,13 +1,14 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import React, { FC } from 'react';
-import AuthGuard from 'src/components/auth/auth_guard';
 import AuthProvider from 'src/components/auth/auth_provider';
-import HomePage from 'src/pages/home_page/home_page';
+import Router from 'src/components/router/router';
 
 const App: FC = () => (
   <AuthProvider>
-    <AuthGuard>
-      <HomePage />
-    </AuthGuard>
+    <ChakraProvider>
+      <Router />
+    </ChakraProvider>
   </AuthProvider>
 );
+
 export default App;
