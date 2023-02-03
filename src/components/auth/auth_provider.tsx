@@ -7,9 +7,8 @@ interface AuthProviderProps {
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => (
   <Auth0Provider
-    // TODO: Move to env
-    domain="dev-wf0qtreu.eu.auth0.com"
-    clientId="WjLdGGlTr8X3mfPhRzwnHpaD5zqEC1UY"
+    domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ''}
+    clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ''}
     authorizationParams={{
       redirect_uri: window.location.origin,
     }}
