@@ -7,7 +7,7 @@ import renderWithProviders from 'src/test/test_utils';
 describe('HomePage', () => {
   it('should render placeholder text ', () => {
     renderWithProviders(<HomePage />);
-    const linkElement = screen.getByText('placeholder');
+    const linkElement = screen.getByText('Home page placeholder');
     expect(linkElement).toBeInTheDocument();
   });
 });

@@ -8,19 +8,21 @@ import {
   DrawerCloseButton,
   useDisclosure,
   IconButton,
-  Flex,
-  Center,
-  Text,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
-import { RiHome2Line } from 'react-icons/ri';
+import {
+  RiBookFill,
+  RiFilePaper2Fill,
+  RiHome2Fill,
+  RiTrophyFill,
+} from 'react-icons/ri';
+import NavDrawerItem from 'src/components/nav/nav_drawer_item/nav_drawer_item';
 
 import './nav_drawer.scss';
 
 const NavDrawer: FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<HTMLButtonElement>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
@@ -43,14 +45,18 @@ const NavDrawer: FC = () => {
           <DrawerCloseButton />
           <DrawerHeader>Menu</DrawerHeader>
           <DrawerBody className="drawer-body">
-            <Link to="/">
-              <Flex gap="20px">
-                <Center>
-                  <RiHome2Line size="25px" />
-                </Center>
-                <Text fontWeight="300">Home</Text>
-              </Flex>
-            </Link>
+            <NavDrawerItem title="Home" path="/" Icon={RiHome2Fill} />
+            <NavDrawerItem title="Courses" path="/courses" Icon={RiBookFill} />
+            <NavDrawerItem
+              title="Challenges"
+              path="/challenges"
+              Icon={RiTrophyFill}
+            />
+            <NavDrawerItem
+              title="Exams"
+              path="/exams"
+              Icon={RiFilePaper2Fill}
+            />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
