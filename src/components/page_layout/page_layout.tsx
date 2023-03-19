@@ -9,7 +9,7 @@ interface PageLayoutProps {
 const PageLayout: FC<PageLayoutProps> = ({ children }) => (
   <>
     <NavBar />
-    <Box>{children}</Box>
+    <Box p="35px">{children}</Box>
   </>
 );
 export default PageLayout;
