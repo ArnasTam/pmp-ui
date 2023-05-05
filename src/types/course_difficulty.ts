@@ -1,6 +1,6 @@
-enum CourseDifficulty {
+enum Difficulty {
   Beginner,
   Intermediate,
   Advanced,
 }
-export default CourseDifficulty;
+export default Difficulty;

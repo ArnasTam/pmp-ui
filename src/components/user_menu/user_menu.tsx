@@ -10,9 +10,9 @@ const UserMenu: FC = () => {
     <>
       <Menu>
         <MenuButton>
-          <Avatar src={user?.picture} size="md" name={user?.name} />
+          <Avatar src={user?.picture} size="md" border="2px solid white" />
         </MenuButton>
-        <MenuList>
+        <MenuList zIndex="1000">
           <MenuItem
             icon={<RiLogoutBoxLine size="20px" />}
             onClick={() => logout()}

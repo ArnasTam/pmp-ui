@@ -8,19 +8,20 @@ import {
   DrawerCloseButton,
   useDisclosure,
   IconButton,
+  useToast,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
-import {
-  RiBookFill,
-  RiFilePaper2Fill,
-  RiHome2Fill,
-  RiTrophyFill,
-} from 'react-icons/ri';
-import NavDrawerItem from 'src/components/nav/nav_drawer_item/nav_drawer_item';
+import { RiBookFill, RiSettings2Fill, RiTrophyFill } from 'react-icons/ri';
+import NavDrawerItem, {
+  NavDrawerSubItem,
+} from 'src/components/nav/nav_drawer_item/nav_drawer_item';
+import { useAuthStore, UserRole } from 'src/providers/use_auth_store';
 
 import './nav_drawer.scss';
 
 const NavDrawer: FC = () => {
+  const { role } = useAuthStore();
+  const toast = useToast();
   const btnRef = React.useRef<HTMLButtonElement>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -30,7 +31,11 @@ const NavDrawer: FC = () => {
         aria-label="menu-button"
         display="contents"
         ref={btnRef}
-        onClick={onOpen}
+        onClick={() => {
+          toast.closeAll();
+          onOpen();
+        }}
+        color="white"
       >
         <HamburgerIcon w="7" h="7" />
       </IconButton>
@@ -45,18 +50,38 @@ const NavDrawer: FC = () => {
           <DrawerCloseButton />
           <DrawerHeader>Menu</DrawerHeader>
           <DrawerBody className="drawer-body">
-            <NavDrawerItem title="Home" path="/" Icon={RiHome2Fill} />
             <NavDrawerItem title="Courses" path="/courses" Icon={RiBookFill} />
+            <NavDrawerSubItem title="All Courses" path="/courses" />
+            <NavDrawerSubItem title="Owned Courses" path="/courses/owned" />
+            <NavDrawerSubItem
+              title="Enrolled Courses"
+              path="/courses/enrolled"
+            />
+            <NavDrawerSubItem
+              title="Create New Course"
+              path="/courses/create-new"
+            />
             <NavDrawerItem
               title="Challenges"
               path="/challenges"
               Icon={RiTrophyFill}
             />
-            <NavDrawerItem
-              title="Exams"
-              path="/exams"
-              Icon={RiFilePaper2Fill}
+            <NavDrawerSubItem title="All Challenges" path="/challenges" />
+            <NavDrawerSubItem
+              title="Owned Challenges"
+              path="/challenges/owned"
             />
+            <NavDrawerSubItem
+              title="Create New Challenge"
+              path="/challenges/create-new"
+            />
+            {role === UserRole.ADMIN && (
+              <NavDrawerItem
+                title="Code Languages"
+                path="/code-languages"
+                Icon={RiSettings2Fill}
+              />
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>

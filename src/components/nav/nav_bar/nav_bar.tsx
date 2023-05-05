@@ -1,23 +1,30 @@
-import { Center, Flex, Heading } from '@chakra-ui/react';
+import { Center, Flex, Heading, Spacer } from '@chakra-ui/react';
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 import NavDrawer from 'src/components/nav/nav_drawer/nav_drawer';
 import UserMenu from 'src/components/user_menu/user_menu';
 
 import './nav_bar.scss';
 
 const NavBar: FC = () => (
-  <Flex className="nav-bar">
+  <Flex
+    as="header"
+    className="nav-bar"
+    backgroundColor="black"
+    position="sticky"
+    top="0"
+    zIndex="100"
+    w="100%"
+    height="80px"
+  >
     <Center>
       <NavDrawer />
     </Center>
-    <Center w="100%">
-      <Link to="/">
-        <Heading as="h1" size="xl">
-          App
-        </Heading>
-      </Link>
+    <Center>
+      <Heading as="h1" size="xl" color="white">
+        PMP.
+      </Heading>
     </Center>
+    <Spacer />
     <Center>
       <UserMenu />
     </Center>
