@@ -8,6 +8,11 @@ interface NavDrawerItemProps {
   Icon: React.ElementType;
 }
 
+interface NavDrawerSubItemProps {
+  path: string;
+  title: string;
+}
+
 const NavDrawerItem: FC<NavDrawerItemProps> = ({ path, title, Icon }) => (
   <Link to={path}>
     <Flex gap="20px">
@@ -19,4 +24,14 @@ const NavDrawerItem: FC<NavDrawerItemProps> = ({ path, title, Icon }) => (
   </Link>
 );
 
+export const NavDrawerSubItem: FC<NavDrawerSubItemProps> = ({
+  path,
+  title,
+}) => (
+  <Link to={path}>
+    <Flex pl="45px" color="dimgrey">
+      <Text fontWeight="300">{title}</Text>
+    </Flex>
+  </Link>
+);
 export default NavDrawerItem;

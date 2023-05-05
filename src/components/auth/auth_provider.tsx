@@ -10,6 +10,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => (
     domain={process.env.REACT_APP_AUTH0_DOMAIN ?? ''}
     clientId={process.env.REACT_APP_AUTH0_CLIENT_ID ?? ''}
     authorizationParams={{
+      audience: 'https://dev-wf0qtreu.eu.auth0.com/api/v2/',
       redirect_uri: window.location.origin,
     }}
     cacheLocation="localstorage"

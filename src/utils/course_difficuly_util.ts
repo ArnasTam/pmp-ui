@@ -1,24 +1,24 @@
-import CourseDifficulty from 'src/types/course_difficulty';
+import Difficulty from 'src/types/course_difficulty';
 
-export const getTitleByCourseDifficulty = (difficulty: CourseDifficulty) => {
+export const getTitleByCourseDifficulty = (difficulty: Difficulty) => {
   switch (difficulty) {
-    case CourseDifficulty.Beginner:
+    case Difficulty.Beginner:
       return 'Beginner';
-    case CourseDifficulty.Intermediate:
+    case Difficulty.Intermediate:
       return 'Intermediate';
-    case CourseDifficulty.Advanced:
+    case Difficulty.Advanced:
       return 'Advanced';
     default:
       return undefined;
   }
 };
-export const getColorByCourseDifficulty = (difficulty: CourseDifficulty) => {
+export const getColorByCourseDifficulty = (difficulty: Difficulty) => {
   switch (difficulty) {
-    case CourseDifficulty.Beginner:
+    case Difficulty.Beginner:
       return 'green';
-    case CourseDifficulty.Intermediate:
+    case Difficulty.Intermediate:
       return 'orange';
-    case CourseDifficulty.Advanced:
+    case Difficulty.Advanced:
       return 'red';
     default:
       return undefined;

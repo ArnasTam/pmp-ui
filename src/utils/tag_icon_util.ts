@@ -1,16 +1,28 @@
-import { SiCss3, SiHtml5, SiJavascript } from 'react-icons/si';
+import {
+  SiCplusplus,
+  SiCsharp,
+  SiJavascript,
+  SiPython,
+  SiTypescript,
+} from 'react-icons/si';
 
-export const getIconByTagId = (id: string) => {
-  switch (id) {
-    case 'js_id':
+export const getIconByTag = (title: string) => {
+  switch (title) {
+    case 'JavaScript':
       return SiJavascript;
-    case 'html_id':
-      return SiHtml5;
-    case 'css_id':
-      return SiCss3;
+    case 'TypeScript':
+      return SiTypescript;
+    case 'Java':
+      return undefined;
+    case 'C#':
+      return SiCsharp;
+    case 'C++':
+      return SiCplusplus;
+    case 'Python':
+      return SiPython;
     default:
       return undefined;
   }
 };
 
-export default { getIconByTagId };
+export default { getIconByTag };

@@ -9,6 +9,7 @@ module.exports = {
       tsx: true,
     },
   },
+  ignorePatterns: ['src/components/editor/plugins/*'],
   settings: {
     react: {
       version: 'detect',
@@ -52,5 +53,15 @@ module.exports = {
     'react/require-default-props': [0],
     'react/jsx-wrap-multilines': [0],
     'implicit-arrow-linebreak': [0],
+    'operator-linebreak': [0],
+    'no-confusing-arrow': [0],
+    'react/jsx-props-no-spreading': [0],
+    'react/jsx-curly-newline': [0],
+    'no-underscore-dangle': [0],
+    '@typescript-eslint/lines-between-class-members': [0],
+    '@typescript-eslint/indent': [0],
+    'function-paren-newline': [0],
+    'react/no-array-index-key': [0],
+    'react/jsx-curly-brace-presence': [0],
   },
 };
