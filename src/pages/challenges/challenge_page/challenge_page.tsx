@@ -129,6 +129,11 @@ const ChallengePage: FC = () => {
         <Box position="fixed" top="80px" left="50%" w="50vw">
           <CodeEditor
             initialValue={submissionValues.code}
+            compilerId={
+              codeLanguages.find(
+                (lang) => lang.id === submissionValues.codeLanguageId,
+              )?.compilerId
+            }
             onChange={(value) => {
               setSubmissionValues({
                 ...submissionValues,
@@ -147,6 +152,7 @@ const ChallengePage: FC = () => {
                 }
                 borderRadius="0"
                 onClick={handleRunCode}
+                pr="30px"
               >
                 Run Code
               </Button>

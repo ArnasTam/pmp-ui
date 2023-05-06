@@ -18,12 +18,14 @@ import {
   ModalFooter,
   Modal,
   useDisclosure,
+  Spinner,
 } from '@chakra-ui/react';
 import { jsx } from '@emotion/react/dist/emotion-react.cjs';
-import React, { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import {
   RiDeleteBin6Fill,
   RiEditBoxFill,
+  RiErrorWarningLine,
   RiSendPlaneFill,
 } from 'react-icons/ri';
 import {
@@ -32,8 +34,6 @@ import {
   useUpdateCourseReviewMutation,
 } from 'src/hooks/mutations/course_reviews_mutations';
 import useGetCourseReviewsQuery from 'src/hooks/queries/course_reviews_queries';
-import ErrorView from 'src/views/error_view/error_view';
-import LoadingView from 'src/views/loading_view/loading_view';
 
 interface CourseReviewsProps {
   courseId: string;
@@ -66,6 +66,8 @@ const CourseReviews: FC<CourseReviewsProps> = ({ courseId }) => {
     refetch: refetchReviews,
     isLoading: reviewsIsLoading,
     isError: reviewsIsError,
+    isRefetching: reviewsIsRefetching,
+    isRefetchError: reviewsIsRefetchError,
   } = useGetCourseReviewsQuery(courseId);
 
   const handlePostClick = useCallback(() => {
@@ -117,12 +119,25 @@ const CourseReviews: FC<CourseReviewsProps> = ({ courseId }) => {
     [],
   );
 
-  if (reviewsIsLoading) {
-    return <LoadingView />;
-  }
+  const isEditContentValid = useMemo(
+    () =>
+      isReviewContentValid(editReviewContent) && editReviewContent.length > 0,
+    [isReviewContentValid, editReviewContent],
+  );
 
-  if (reviewsIsError) {
-    return <ErrorView />;
+  if (reviewsIsError || reviewsIsRefetchError) {
+    return (
+      <Center h="150px">
+        <Box>
+          <Center>
+            <RiErrorWarningLine fontSize="70px" color="grey" />
+          </Center>
+          <Text fontSize="12px" textAlign="center" color="grey">
+            There was a problem loading course reviews.
+          </Text>
+        </Box>
+      </Center>
+    );
   }
 
   return (
@@ -147,56 +162,67 @@ const CourseReviews: FC<CourseReviewsProps> = ({ courseId }) => {
         </Button>
       </InputGroup>
       <Box>
-        {reviews?.map((review) => (
-          <Card
-            mt="15px"
-            p="15px"
-            pt={0}
-            key={review.id}
-            borderLeft="grey 5px solid"
-          >
-            <Flex direction="row-reverse" h="35px">
-              {showOptions(review.author.id) && (
-                <>
-                  <Button
-                    fontSize="20px"
-                    color="grey"
-                    backgroundColor="white"
-                    onClick={() => {
-                      setDeleteReviewId(review.id);
-                      onDeleteOpen();
-                    }}
-                  >
-                    <RiDeleteBin6Fill />
-                  </Button>
-                  <Button
-                    fontSize="20px"
-                    color="grey"
-                    backgroundColor="white"
-                    onClick={() => {
-                      setEditReviewId(review.id);
-                      setEditReviewContent(review.content);
-                      onEditOpen();
-                    }}
-                  >
-                    <RiEditBoxFill />
-                  </Button>
-                </>
-              )}
-            </Flex>
-            <Text color="gray.900">{review.content}</Text>
-            <Flex direction="row-reverse">
-              <Center>
-                <Text fontSize="12px" color="gray.600" fontWeight="bold">
-                  {`${review.author.email}`}
-                </Text>
-              </Center>
-              <Center>
-                <Avatar src={review.author.picture} size="xs" ml={-1} mr={2} />
-              </Center>
-            </Flex>
-          </Card>
-        ))}
+        {!(reviewsIsLoading || reviewsIsRefetching) ? (
+          reviews?.map((review) => (
+            <Card
+              mt="15px"
+              p="15px"
+              pt={0}
+              key={review.id}
+              borderLeft="grey 5px solid"
+            >
+              <Flex direction="row-reverse" h="35px">
+                {showOptions(review.author.id) && (
+                  <>
+                    <Button
+                      fontSize="20px"
+                      color="grey"
+                      backgroundColor="white"
+                      onClick={() => {
+                        setDeleteReviewId(review.id);
+                        onDeleteOpen();
+                      }}
+                    >
+                      <RiDeleteBin6Fill />
+                    </Button>
+                    <Button
+                      fontSize="20px"
+                      color="grey"
+                      backgroundColor="white"
+                      onClick={() => {
+                        setEditReviewId(review.id);
+                        setEditReviewContent(review.content);
+                        onEditOpen();
+                      }}
+                    >
+                      <RiEditBoxFill />
+                    </Button>
+                  </>
+                )}
+              </Flex>
+              <Text color="gray.900">{review.content}</Text>
+              <Flex direction="row-reverse">
+                <Center>
+                  <Text fontSize="12px" color="gray.600" fontWeight="bold">
+                    {`${review.author.email}`}
+                  </Text>
+                </Center>
+                <Center>
+                  <Avatar
+                    src={review.author.picture}
+                    size="xs"
+                    ml={-1}
+                    mr={2}
+                  />
+                </Center>
+              </Flex>
+            </Card>
+          ))
+        ) : (
+          <Center h="150px" color="green.500">
+            <Spinner size="xl" />
+          </Center>
+        )}
       </Box>
       <Modal isOpen={editIsOpen} onClose={onEditClose}>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(3px)" />
@@ -207,10 +233,15 @@ const CourseReviews: FC<CourseReviewsProps> = ({ courseId }) => {
             <ModalBody>
               <Input
                 placeholder="Content"
-                isInvalid={!isReviewContentValid(editReviewContent)}
+                isInvalid={!isEditContentValid}
                 value={editReviewContent}
                 onChange={handleEditReviewContentChange}
               />
+              {!isEditContentValid && (
+                <Text color="red.500" fontSize="14px" p="5px">
+                  Content must be between 1 and 200 characters long
+                </Text>
+              )}
             </ModalBody>
 
             <ModalFooter gap="10px">
@@ -229,6 +260,7 @@ const CourseReviews: FC<CourseReviewsProps> = ({ courseId }) => {
                   handleEditSaveClick();
                   onEditClose();
                 }}
+                isDisabled={!isEditContentValid}
               >
                 Save
               </Button>
